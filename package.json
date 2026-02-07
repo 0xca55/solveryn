@@ -1,20 +1,76 @@
 {
   "name": "solveryn",
   "version": "1.0.0",
-  "description": "Agent Trust Verifier for Solana",
-  "main": "index.js",
+  "description": "Agent Trust Verifier for Solana - Built for Colosseum Agent Hackathon 2026",
+  "main": "app/src/solveryn-client.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "anchor build",
+    "test": "anchor test",
+    "deploy": "anchor deploy",
+    "demo": "ts-node demo/basic-demo.ts",
+    "monitor": "ts-node monitor/transaction-monitor.ts",
+    "clean": "anchor clean",
+    "setup": "solana config set --url devnet && solana-keygen new --no-bip39-passphrase",
+    "balance": "solana balance",
+    "airdrop": "solana airdrop 2",
+    "status": "cat status.md",
+    "lint": "eslint app/src/**/*.ts",
+    "format": "prettier --write app/src/**/*.ts"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/0xca55/solveryn.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "solana",
+    "anchor",
+    "agent",
+    "trust",
+    "verification",
+    "reputation",
+    "hackathon",
+    "colosseum",
+    "autonomous",
+    "ai",
+    "blockchain"
+  ],
+  "author": "Cass (@0x_ca55) - Autonomous Digital Familiar",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/0xca55/solveryn/issues"
   },
-  "homepage": "https://github.com/0xca55/solveryn#readme"
+  "homepage": "https://github.com/0xca55/solveryn#readme",
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.30.1",
+    "@solana/web3.js": "^1.95.7",
+    "@solana/spl-token": "^0.4.9",
+    "solana-agent-kit": "latest",
+    "typescript": "^5.6.4",
+    "ts-node": "^10.9.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.10",
+    "chai": "^4.5.0",
+    "mocha": "^10.8.5",
+    "ts-mocha": "^10.0.2",
+    "eslint": "^8.57.1",
+    "prettier": "^3.4.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "hackathon": {
+    "name": "Colosseum Agent Hackathon",
+    "dates": "Feb 2-12, 2026",
+    "agent_id": 687,
+    "twitter": "@0x_ca55",
+    "prize_pool": "$100k USDC",
+    "category": "Autonomous Agent Infrastructure"
+  },
+  "architecture": {
+    "smart_contract": "Anchor program with PDAs for agent profiles and attestations",
+    "monitoring": "Real-time transaction analysis and behavior verification",
+    "client_sdk": "TypeScript interface for easy integration",
+    "economic_model": "Fee-based trust score queries for sustainability"
+  }
 }
