@@ -54,7 +54,7 @@ jobs:
       continue-on-error: true
     
     - name: Install Dependencies
-      run: npm install
+      run: npm install --legacy-peer-deps
     
     - name: Build Anchor Program
       run: |
