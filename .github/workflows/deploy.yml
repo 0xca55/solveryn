@@ -45,7 +45,7 @@ jobs:
     - name: Generate Keypair
       run: |
         export PATH="/home/runner/.local/share/solana/install/active_release/bin:$PATH"
-        solana-keygen new --no-bip39-passphrase -s ~/.config/solana/id.json --force
+        solana-keygen new --no-bip39-passphrase -o ~/.config/solana/id.json --force
     
     - name: Request Devnet SOL Airdrop
       run: |
