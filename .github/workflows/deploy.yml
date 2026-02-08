@@ -101,16 +101,11 @@ jobs:
           echo "ERROR: Keypair not found at $PROGRAM_KEYPAIR"
         fi
         
-        # Save deployment info to file
-        cat > .devnet.json << EOF
-{
-  "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
-  "feePayerWallet": "$WALLET_ADDRESS",
-  "programId": "$PROGRAM_ID",
-  "cluster": "devnet",
-  "notes": "Each CI/CD run generates a fresh wallet and program keypair. This captures the addresses for testing."
-}
-EOF
+        # Save deployment info to file using printf
+        printf '{\n  "timestamp": "%s",\n  "feePayerWallet": "%s",\n  "programId": "%s",\n  "cluster": "devnet",\n  "notes": "Each CI/CD run generates a fresh wallet and program keypair. This captures the addresses for testing."\n}\n' \
+          "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+          "$WALLET_ADDRESS" \
+          "$PROGRAM_ID" > .devnet.json
         
         echo "=== Deployment Info ==="
         cat .devnet.json
