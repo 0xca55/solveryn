@@ -113,9 +113,9 @@ EOF
     
     - name: Commit & Push Deployment Info
       run: |
-        git config user.email "cass@yatori.io"
-        git config user.name "Cass"
+        git config user.email "github-actions@github.com"
+        git config user.name "GitHub Actions"
         git add .devnet.json
         git commit -m "chore: capture devnet deployment info (wallet + program ID)" || echo "No changes to commit"
-        git push origin main || echo "Push failed (may be expected)"
+        git push "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" main || echo "Push warning"
       continue-on-error: true
