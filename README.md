@@ -152,6 +152,28 @@ Purpose-built for agents verifying other agents, not just human oversight
 - **Protocol Fee**: 20% for ongoing development and maintenance
 - **Self-Funding**: Service becomes profitable and self-sustaining
 
+## Deployment
+
+### Automatic (GitHub Actions) ✨
+Every push to `main` automatically:
+1. Builds Anchor program
+2. Runs test suite  
+3. Deploys to Solana devnet
+
+**Monitor**: https://github.com/0xca55/solveryn/actions
+
+See [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) for details.
+
+### Manual (Local)
+```bash
+# Install Anchor
+cargo install --git https://github.com/coral-xyz/anchor --tag v0.30.1 anchor-cli
+
+# Build & deploy
+anchor build
+anchor deploy --provider.cluster devnet
+```
+
 ## Installation & Usage
 
 ```bash
