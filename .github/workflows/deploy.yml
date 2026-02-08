@@ -77,9 +77,45 @@ jobs:
       env:
         ANCHOR_WALLET: ~/.config/solana/id.json
     
-    - name: Output Deployment Info
+    - name: Capture Deployment Info
       run: |
-        echo "✅ Solveryn deployed to devnet!"
+        export PATH="/home/runner/.cargo/bin:$PATH"
         export PATH="/home/runner/.local/share/solana/install/active_release/bin:$PATH"
-        solana address
+        
+        # Get fee payer wallet address
+        WALLET_ADDRESS=$(solana address)
+        echo "Fee Payer Wallet: $WALLET_ADDRESS"
+        
+        # Get program ID using solana-keygen pubkey command
+        PROGRAM_KEYPAIR="target/deploy/solveryn-keypair.json"
+        if [ -f "$PROGRAM_KEYPAIR" ]; then
+          PROGRAM_ID=$(solana-keygen pubkey "$PROGRAM_KEYPAIR")
+          echo "Program ID: $PROGRAM_ID"
+        else
+          PROGRAM_ID="KEYPAIR_NOT_FOUND"
+          echo "ERROR: Keypair not found at $PROGRAM_KEYPAIR"
+        fi
+        
+        # Save deployment info to file
+        cat > .devnet.json << EOF
+{
+  "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+  "feePayerWallet": "$WALLET_ADDRESS",
+  "programId": "$PROGRAM_ID",
+  "cluster": "devnet",
+  "notes": "Each CI/CD run generates a fresh wallet and program keypair. This captures the addresses for testing."
+}
+EOF
+        
+        echo "=== Deployment Info ==="
+        cat .devnet.json
+      continue-on-error: true
+    
+    - name: Commit & Push Deployment Info
+      run: |
+        git config user.email "cass@yatori.io"
+        git config user.name "Cass"
+        git add .devnet.json
+        git commit -m "chore: capture devnet deployment info (wallet + program ID)" || echo "No changes to commit"
+        git push origin main || echo "Push failed (may be expected)"
       continue-on-error: true
